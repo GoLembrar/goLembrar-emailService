@@ -2,13 +2,21 @@ package api
 
 import (
 	"github.com/GoLembrar/goLembrar-emailService/internal/api/handler"
+	"github.com/GoLembrar/goLembrar-emailService/internal/email"
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes() *gin.Engine {
+func SetupRoutes() (*gin.Engine, error) {
 	r := gin.Default()
 
-	r.GET("/health", handler.HealthChecker)
+	emailService, err := email.NewEmailService()
+	if err != nil {
+		return nil, err
+	}
+	emailHandler := handler.NewEmailHandler(emailService)
 
-	return r
+	r.GET("/check", handler.HealthChecker)
+	r.POST("/send-email", emailHandler.SendEmail)
+
+	return r, nil
 }
