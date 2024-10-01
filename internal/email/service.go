@@ -3,7 +3,7 @@ package email
 import (
 	"fmt"
 
-	util "github.com/GoLembrar/goLembrar-emailService/internal/util"
+	"github.com/GoLembrar/goLembrar-emailService/internal/utils"
 	"github.com/go-playground/validator/v10"
 	"github.com/resend/resend-go/v2"
 )
@@ -23,7 +23,7 @@ type EmailService struct {
 }
 
 func NewEmailService() (*EmailService, error) {
-	apiKey := util.GetEnvVar("APIKEY_RESEND")
+	apiKey := utils.GetEnvVar("APIKEY_RESEND")
 	client := resend.NewClient(apiKey)
 
 	validate := validator.New()
@@ -35,14 +35,20 @@ func NewEmailService() (*EmailService, error) {
 }
 
 func (s *EmailService) SendEmail(params *EmailParams) (string, error) {
+
+	if err := s.validate.Struct(params); err != nil {
+		validationErrs := err.(validator.ValidationErrors)
+		return "", fmt.Errorf("validation error: %v", validationErrs)
+	}
+
 	resendParams := &resend.SendEmailRequest{
-		From:    util.GetEnvVar("SEND_EMAIL"),
+		From:    utils.GetEnvVar("SEND_EMAIL"),
 		To:      params.To,
 		Html:    params.Html,
 		Subject: params.Subject,
 		Cc:      params.Cc,
 		Bcc:     params.Bcc,
-		ReplyTo: util.GetEnvVar("SEND_EMAIL"),
+		ReplyTo: utils.GetEnvVar("SEND_EMAIL"),
 	}
 
 	sent, err := s.client.Emails.Send(resendParams)

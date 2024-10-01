@@ -1,4 +1,4 @@
-package util
+package utils
 
 import (
 	"log"
@@ -10,7 +10,7 @@ import (
 func GetEnvVar(key string) string {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal(err)
+		log.Panicln(err)
 	}
 	return os.Getenv(key)
 }
