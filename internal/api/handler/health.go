@@ -8,6 +8,6 @@ import (
 
 func HealthChecker(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"status": "OK",
+		"status": "ok",
 	})
 }
