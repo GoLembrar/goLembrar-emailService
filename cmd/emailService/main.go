@@ -12,12 +12,12 @@ func main() {
 
 	r, err := api.SetupRoutes()
 	if err != nil {
-		log.Fatalf("Error on setup routes: %v\n", err)
+		log.Fatalf("error on setup routes: %v\n", err)
 	}
 
 	log.Printf("goLembrar EmailService at port :%d\n", port)
 	err = r.Run(":" + fmt.Sprint(port))
 	if err != nil {
-		log.Fatalf("Error starting server: %v\n", err)
+		log.Fatalf("error starting server: %v\n", err)
 	}
 }

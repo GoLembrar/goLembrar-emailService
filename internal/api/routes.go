@@ -17,7 +17,7 @@ func SetupRoutes() (*gin.Engine, error) {
 	emailHandler := handler.NewEmailHandler(emailService)
 
 	r.POST("/send-email", emailHandler.SendEmail)
+	r.POST("/schedule-email", emailHandler.ScheduleEmail)
 	r.GET("/check", handler.HealthChecker)
-
 	return r, nil
 }

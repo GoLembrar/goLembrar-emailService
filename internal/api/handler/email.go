@@ -24,11 +24,29 @@ func (h *EmailHandler) SendEmail(c *gin.Context) {
 	}
 
 	id, err := h.emailService.SendEmail(&params)
-	
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Email sent successfully", "id": id})
+}
+
+func (h *EmailHandler) ScheduleEmail(c *gin.Context) {
+	var params email.ScheduleEmailParams
+
+	if err := c.ShouldBindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	id, err := h.emailService.ScheduleEmail(&params)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Email schedule successfully", "id": id})
 }
