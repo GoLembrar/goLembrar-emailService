@@ -7,15 +7,15 @@ Esse microserviço de e-mail foi feito para simplificar o desenvolvimento do goL
 #### Instale os pacotes
 
 ```sh
-$ go install https://github.com/air-verse/air
+$ go install github.com/air-verse/air@latest
 
-$ go install https://github.com/swaggo/swag
+$ go install github.com/swaggo/swag/cmd/swag@latest
 ```
 
 #### Gere os arquivos do swagger
 
 ```sh
-$ ~/go/bin/swag init main.go
+$ ~/go/bin/swag init -g main.g
 ```
 
 #### Rode com o air

@@ -4,14 +4,16 @@ import (
 	"fmt"
 	"log"
 
+	_ "github.com/GoLembrar/goLembrar-emailService/docs"
+
 	"github.com/GoLembrar/goLembrar-emailService/internal/api"
 	"github.com/GoLembrar/goLembrar-emailService/internal/utils"
 	"github.com/fatih/color"
 )
 
-// @title           goLembrar email service
+// @title			goLembrar email service
 // @version			1.0
-// @description     This microservice send the emails for you.
+// @description		This microservice send the emails for you.
 // @host			https://sendemail.golembrar.com
 // @basePath		/v1
 func main() {

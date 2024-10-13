@@ -15,15 +15,14 @@ func NewEmailHandler(emailService *email.EmailService) *EmailHandler {
 	return &EmailHandler{emailService: emailService}
 }
 
-// SendEmail
-// @Summary      Send email
-// @Description  Get the info and send email for now
-// @Tags         email
-// @Accept       json
-// @Produce      json
-// @Success      200  {object}  email.EmailParams
-// @Failure      400  {object}  swagger.APIError
-// @Router       /send-email	[post]
+// @Summary			Send email
+// @Description		Get the info and send email for now
+// @Tags			email
+// @Accept			json
+// @Produce			json
+// @Success			200			{object}	email.EmailParams
+// @Failure			400			{object}	swagger.APIError
+// @Router			/send-email	[post]
 func (h *EmailHandler) SendEmail(c *gin.Context) {
 	var params email.EmailParams
 

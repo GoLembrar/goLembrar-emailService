@@ -1,0 +1,64 @@
+basePath: /v1
+definitions:
+  email.EmailParams:
+    properties:
+      bcc:
+        items:
+          type: string
+        type: array
+      cc:
+        items:
+          type: string
+        type: array
+      html:
+        maxLength: 500
+        type: string
+      replyTo:
+        maxLength: 100
+        type: string
+      subject:
+        maxLength: 120
+        type: string
+      to:
+        items:
+          type: string
+        type: array
+    required:
+    - html
+    - subject
+    - to
+    type: object
+  swagger.APIError:
+    properties:
+      errorCode:
+        type: integer
+      errorMessage:
+        type: string
+    type: object
+host: https://sendemail.golembrar.com
+info:
+  contact: {}
+  description: This microservice send the emails for you.
+  title: goLembrar email service
+  version: "1.0"
+paths:
+  /send-email:
+    post:
+      consumes:
+      - application/json
+      description: Get the info and send email for now
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/email.EmailParams'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.APIError'
+      summary: Send email
+      tags:
+      - email
+swagger: "2.0"
