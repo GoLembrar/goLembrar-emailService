@@ -9,7 +9,10 @@ require (
 	github.com/resend/resend-go/v2 v2.12.0
 )
 
-require github.com/mattn/go-colorable v0.1.13 // indirect
+require (
+	github.com/gin-contrib/cors v1.7.2 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+)
 
 require (
 	github.com/bytedance/sonic v1.12.3 // indirect
