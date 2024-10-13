@@ -1,15 +1,20 @@
 package api
 
 import (
+	"github.com/GoLembrar/goLembrar-emailService/docs"
 	"github.com/GoLembrar/goLembrar-emailService/internal/api/handler"
 	"github.com/GoLembrar/goLembrar-emailService/internal/api/middleware"
 	"github.com/GoLembrar/goLembrar-emailService/internal/email"
 	"github.com/GoLembrar/goLembrar-emailService/internal/utils"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func SetupRoutes() (*gin.Engine, error) {
 	r := gin.Default()
+
+	rV1 := r.Group("/v1")
 
 	goEnv := utils.GetEnvVar("GO_ENV")
 
@@ -23,9 +28,12 @@ func SetupRoutes() (*gin.Engine, error) {
 	}
 
 	emailHandler := handler.NewEmailHandler(emailService)
+	docs.SwaggerInfo.BasePath = "/v1"
 
-	r.POST("/send-email", emailHandler.SendEmail)
-	// r.POST("/schedule-email", emailHandler.ScheduleEmail)
+	rV1.POST("/send-email", emailHandler.SendEmail)
+	// rV1.POST("/schedule-email", emailHandler.ScheduleEmail)
 	r.GET("/check", handler.HealthChecker)
+
+	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	return r, nil
 }

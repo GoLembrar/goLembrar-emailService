@@ -29,3 +29,6 @@ gen/
 
 # env
 .env
+
+# swagger generated
+docs
