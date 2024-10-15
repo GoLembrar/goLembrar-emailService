@@ -11,10 +11,10 @@ import (
 	"github.com/fatih/color"
 )
 
-// @title			goLembrar email service
-// @version			1.0
-// @description		This microservice send the emails for you.
-// @host			https://sendemail.golembrar.com
+// @title			goLembrar email microservice
+// @version		0.1
+// @description	Dedicated microservice for send the emails for https://golembrar.com.
+// @host			localhost:8080
 // @basePath		/v1
 func main() {
 	port := utils.GetEnvVar("PORT")

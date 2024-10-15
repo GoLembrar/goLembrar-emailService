@@ -4,20 +4,37 @@ package docs
 import "github.com/swaggo/swag"
 
 const docTemplate = `{
-    "schemes": {{ marshal .Schemes }},
+    "schemes": [[ marshal .Schemes ]],
     "swagger": "2.0",
     "info": {
-        "description": "{{escape .Description}}",
-        "title": "{{.Title}}",
+        "description": "[[escape .Description]]",
+        "title": "[[.Title]]",
         "contact": {},
-        "version": "{{.Version}}"
+        "version": "[[.Version]]"
     },
-    "host": "{{.Host}}",
-    "basePath": "{{.BasePath}}",
+    "host": "[[.Host]]",
+    "basePath": "[[.BasePath]]",
     "paths": {
+        "/check": {
+            "get": {
+                "description": "check if API is running",
+                "tags": [
+                    "main"
+                ],
+                "summary": "Health checker",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.HealthCheckerResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/send-email": {
             "post": {
-                "description": "Take the info and send email for you",
+                "description": "take request and send the email for you",
                 "produces": [
                     "application/json"
                 ],
@@ -38,7 +55,10 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.EmailResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
@@ -67,6 +87,7 @@ const docTemplate = `{
                 },
                 "owner": {
                     "type": "string",
+                    "maxLength": 100,
                     "example": "maria@gmail.com"
                 },
                 "subject": {
@@ -82,6 +103,28 @@ const docTemplate = `{
                     "example": [
                         "joaozinho@gmail.com"
                     ]
+                }
+            }
+        },
+        "handler.EmailResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "cfb2011b..."
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Email sent successfully"
+                }
+            }
+        },
+        "handler.HealthCheckerResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "ok"
                 }
             }
         },
@@ -101,16 +144,16 @@ const docTemplate = `{
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
-	Host:             "https://sendemail.golembrar.com",
+	Version:          "0.1",
+	Host:             "localhost:8080",
 	BasePath:         "/v1",
 	Schemes:          []string{},
-	Title:            "goLembrar email service",
-	Description:      "This microservice send the emails for you.",
+	Title:            "goLembrar email microservice",
+	Description:      "Dedicated microservice for send the emails for https://golembrar.com.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
-	LeftDelim:        "{{",
-	RightDelim:       "}}",
+	LeftDelim:        "[[",
+	RightDelim:       "]]",
 }
 
 func init() {

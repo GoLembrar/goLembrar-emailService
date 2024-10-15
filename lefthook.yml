@@ -4,9 +4,13 @@
 pre-commit:
   piped: true
   commands:
+    format:
+      run: go fmt ./...
     lint:
       run: golangci-lint run
     gen-docs:
-      run: swag init -g main.go
+      run: |
+        swag fmt
+        swag init -g main.go
     add-git:
       run: git add .

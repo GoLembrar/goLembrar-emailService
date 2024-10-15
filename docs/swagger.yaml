@@ -8,6 +8,7 @@ definitions:
         type: string
       owner:
         example: maria@gmail.com
+        maxLength: 100
         type: string
       subject:
         example: The message title
@@ -25,6 +26,21 @@ definitions:
     - subject
     - to
     type: object
+  handler.EmailResponse:
+    properties:
+      id:
+        example: cfb2011b...
+        type: string
+      message:
+        example: Email sent successfully
+        type: string
+    type: object
+  handler.HealthCheckerResponse:
+    properties:
+      status:
+        example: ok
+        type: string
+    type: object
   swagger.APIError:
     properties:
       errorCode:
@@ -32,16 +48,27 @@ definitions:
       errorMessage:
         type: string
     type: object
-host: https://sendemail.golembrar.com
+host: localhost:8080
 info:
   contact: {}
-  description: This microservice send the emails for you.
-  title: goLembrar email service
-  version: "1.0"
+  description: Dedicated microservice for send the emails for https://golembrar.com.
+  title: goLembrar email microservice
+  version: "0.1"
 paths:
+  /check:
+    get:
+      description: check if API is running
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.HealthCheckerResponse'
+      summary: Health checker
+      tags:
+      - main
   /send-email:
     post:
-      description: Take the info and send email for you
+      description: take request and send the email for you
       parameters:
       - description: Email parameters
         in: body
@@ -54,6 +81,8 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/handler.EmailResponse'
         "400":
           description: Bad Request
           schema:

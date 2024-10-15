@@ -30,10 +30,11 @@ func SetupRoutes() (*gin.Engine, error) {
 	emailHandler := handler.NewEmailHandler(emailService)
 	docs.SwaggerInfo.BasePath = "/v1"
 
-	rV1.POST("/send-email", emailHandler.SendEmail)
 	// rV1.POST("/schedule-email", emailHandler.ScheduleEmail)
-	r.GET("/check", handler.HealthChecker)
+	rV1.POST("/send-email", emailHandler.SendEmail)
+	rV1.GET("/check", handler.HealthChecker)
 
+	r.GET("/", handler.RedirectToDocs)
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	return r, nil
 }

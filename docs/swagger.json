@@ -1,17 +1,34 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This microservice send the emails for you.",
-        "title": "goLembrar email service",
+        "description": "Dedicated microservice for send the emails for https://golembrar.com.",
+        "title": "goLembrar email microservice",
         "contact": {},
-        "version": "1.0"
+        "version": "0.1"
     },
-    "host": "https://sendemail.golembrar.com",
+    "host": "localhost:8080",
     "basePath": "/v1",
     "paths": {
+        "/check": {
+            "get": {
+                "description": "check if API is running",
+                "tags": [
+                    "main"
+                ],
+                "summary": "Health checker",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.HealthCheckerResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/send-email": {
             "post": {
-                "description": "Take the info and send email for you",
+                "description": "take request and send the email for you",
                 "produces": [
                     "application/json"
                 ],
@@ -32,7 +49,10 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.EmailResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
@@ -61,6 +81,7 @@
                 },
                 "owner": {
                     "type": "string",
+                    "maxLength": 100,
                     "example": "maria@gmail.com"
                 },
                 "subject": {
@@ -76,6 +97,28 @@
                     "example": [
                         "joaozinho@gmail.com"
                     ]
+                }
+            }
+        },
+        "handler.EmailResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "cfb2011b..."
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Email sent successfully"
+                }
+            }
+        },
+        "handler.HealthCheckerResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "ok"
                 }
             }
         },

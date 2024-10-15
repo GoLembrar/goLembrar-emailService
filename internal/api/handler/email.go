@@ -15,13 +15,13 @@ func NewEmailHandler(emailService *email.EmailService) *EmailHandler {
 	return &EmailHandler{emailService: emailService}
 }
 
-// @Summary			Send email
-// @Description	Take the info and send email for you
-// @Tags				email
-// @Param			Body body email.EmailParams true "Email parameters"
-// @Produce			json
-// @Success			200
-// @Failure			400			{object}	swagger.APIError
+// @Summary		Send email
+// @Description	take request and send the email for you
+// @Tags			email
+// @Param			Body	body	email.EmailParams	true	"Email parameters"
+// @Produce		json
+// @Success		200		{object} EmailResponse
+// @Failure		400				{object}	swagger.APIError
 // @Router			/send-email	[post]
 func (h *EmailHandler) SendEmail(c *gin.Context) {
 	var params email.EmailParams
@@ -39,6 +39,11 @@ func (h *EmailHandler) SendEmail(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Email sent successfully", "id": id})
+}
+
+type EmailResponse struct {
+	ID      string `json:"id" example:"cfb2011b..."`
+	Message string `json:"message" example:"Email sent successfully"`
 }
 
 func (h *EmailHandler) ScheduleEmail(c *gin.Context) {

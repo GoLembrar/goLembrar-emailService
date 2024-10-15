@@ -12,7 +12,7 @@ type EmailParams struct {
 	To      []string `json:"to" validate:"required,dive,email,max=100" example:"joaozinho@gmail.com"`
 	Subject string   `json:"subject" validate:"required,max=120" example:"The message title"`
 	Html    string   `json:"html" validate:"required,max=500" example:"<p>Message description</p>"`
-	Owner   string   `json:"owner" validate:"required,dive,email,max=100" example:"maria@gmail.com"`
+	Owner   string   `json:"owner" validate:"required,email,max=100" example:"maria@gmail.com"`
 }
 
 type ScheduleEmailParams struct {
