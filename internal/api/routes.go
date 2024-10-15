@@ -1,28 +1,44 @@
 package api
 
 import (
+	"time"
+
 	"github.com/GoLembrar/goLembrar-emailService/docs"
 	"github.com/GoLembrar/goLembrar-emailService/internal/api/handler"
-	"github.com/GoLembrar/goLembrar-emailService/internal/api/middleware"
 	"github.com/GoLembrar/goLembrar-emailService/internal/email"
 	"github.com/GoLembrar/goLembrar-emailService/internal/utils"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func SetupRoutes() (*gin.Engine, error) {
+
 	r := gin.Default()
-
 	rV1 := r.Group("/v1")
-
 	goEnv := utils.GetEnvVar("GO_ENV")
 
 	if goEnv != "development" {
-		r.Use(middleware.CorsMiddleware())
 		docs.SwaggerInfo.Host = "sendemail.golembrar.com"
+		r.Use(cors.New(cors.Config{
+			AllowCredentials: true,
+			MaxAge:           12 * time.Hour,
+			AllowOrigins: []string{
+				"https://api.golembrar.com",
+			},
+			AllowMethods: []string{
+				"GET",
+				"POST",
+				"OPTIONS",
+			},
+			AllowHeaders: []string{
+				"Authorization",
+			},
+		}))
 	} else {
 		docs.SwaggerInfo.Host = "localhost:8080"
+		r.Use(cors.Default())
 	}
 
 	emailService, err := email.NewEmailService()
