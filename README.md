@@ -10,6 +10,10 @@ Esse microserviço de e-mail foi feito para simplificar o desenvolvimento do goL
 $ go install github.com/air-verse/air@latest
 
 $ go install github.com/swaggo/swag/cmd/swag@latest
+
+$ go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
+$ go install github.com/evilmartians/lefthook@latest
 ```
 
 #### Gere os arquivos do swagger
