@@ -20,6 +20,9 @@ func SetupRoutes() (*gin.Engine, error) {
 
 	if goEnv != "development" {
 		r.Use(middleware.CorsMiddleware())
+		docs.SwaggerInfo.Host = "sendemail.golembrar.com"
+	} else {
+		docs.SwaggerInfo.Host = "localhost:8080"
 	}
 
 	emailService, err := email.NewEmailService()
@@ -28,7 +31,6 @@ func SetupRoutes() (*gin.Engine, error) {
 	}
 
 	emailHandler := handler.NewEmailHandler(emailService)
-	docs.SwaggerInfo.BasePath = "/v1"
 
 	// rV1.POST("/schedule-email", emailHandler.ScheduleEmail)
 	rV1.POST("/send-email", emailHandler.SendEmail)

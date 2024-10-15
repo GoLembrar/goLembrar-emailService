@@ -1,12 +1,11 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Dedicated microservice for send the emails for https://golembrar.com.",
+        "description": "Dedicated microservice for send the emails for https://golembrar.com",
         "title": "goLembrar email microservice",
         "contact": {},
         "version": "0.1"
     },
-    "host": "localhost:8080",
     "basePath": "/v1",
     "paths": {
         "/check": {
@@ -132,6 +131,11 @@
                     "type": "string"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
         }
     }
 }

@@ -48,10 +48,9 @@ definitions:
       errorMessage:
         type: string
     type: object
-host: localhost:8080
 info:
   contact: {}
-  description: Dedicated microservice for send the emails for https://golembrar.com.
+  description: Dedicated microservice for send the emails for https://golembrar.com
   title: goLembrar email microservice
   version: "0.1"
 paths:
@@ -90,4 +89,7 @@ paths:
       summary: Send email
       tags:
       - email
+securityDefinitions:
+  BasicAuth:
+    type: basic
 swagger: "2.0"

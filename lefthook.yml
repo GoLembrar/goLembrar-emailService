@@ -9,8 +9,6 @@ pre-commit:
     lint:
       run: golangci-lint run
     gen-docs:
-      run: |
-        swag fmt
-        swag init -g main.go
+      run: swag init -g main.go
     add-git:
       run: git add .
