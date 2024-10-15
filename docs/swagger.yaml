@@ -2,29 +2,29 @@ basePath: /v1
 definitions:
   email.EmailParams:
     properties:
-      html:
+      descHtml:
         example: <p>Message description</p>
         maxLength: 500
         type: string
-      owner:
-        example: maria@gmail.com
-        maxLength: 100
-        type: string
-      subject:
-        example: The message title
-        maxLength: 120
-        type: string
-      to:
+      emails:
         example:
         - joaozinho@gmail.com
         items:
           type: string
         type: array
+      ownerEmail:
+        example: maria@gmail.com
+        maxLength: 100
+        type: string
+      title:
+        example: The message title
+        maxLength: 120
+        type: string
     required:
-    - html
-    - owner
-    - subject
-    - to
+    - descHtml
+    - emails
+    - ownerEmail
+    - title
     type: object
   handler.EmailResponse:
     properties:

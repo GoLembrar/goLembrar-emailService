@@ -4,16 +4,16 @@ package docs
 import "github.com/swaggo/swag"
 
 const docTemplate = `{
-    "schemes": [[ marshal .Schemes ]],
+    "schemes": {{ marshal .Schemes }},
     "swagger": "2.0",
     "info": {
-        "description": "[[escape .Description]]",
-        "title": "[[.Title]]",
+        "description": "{{escape .Description}}",
+        "title": "{{.Title}}",
         "contact": {},
-        "version": "[[.Version]]"
+        "version": "{{.Version}}"
     },
-    "host": "[[.Host]]",
-    "basePath": "[[.BasePath]]",
+    "host": "{{.Host}}",
+    "basePath": "{{.BasePath}}",
     "paths": {
         "/check": {
             "get": {
@@ -74,28 +74,18 @@ const docTemplate = `{
         "email.EmailParams": {
             "type": "object",
             "required": [
-                "html",
-                "owner",
-                "subject",
-                "to"
+                "descHtml",
+                "emails",
+                "ownerEmail",
+                "title"
             ],
             "properties": {
-                "html": {
+                "descHtml": {
                     "type": "string",
                     "maxLength": 500,
                     "example": "\u003cp\u003eMessage description\u003c/p\u003e"
                 },
-                "owner": {
-                    "type": "string",
-                    "maxLength": 100,
-                    "example": "maria@gmail.com"
-                },
-                "subject": {
-                    "type": "string",
-                    "maxLength": 120,
-                    "example": "The message title"
-                },
-                "to": {
+                "emails": {
                     "type": "array",
                     "items": {
                         "type": "string"
@@ -103,6 +93,16 @@ const docTemplate = `{
                     "example": [
                         "joaozinho@gmail.com"
                     ]
+                },
+                "ownerEmail": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "example": "maria@gmail.com"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 120,
+                    "example": "The message title"
                 }
             }
         },
@@ -157,8 +157,8 @@ var SwaggerInfo = &swag.Spec{
 	Description:      "Dedicated microservice for send the emails for https://golembrar.com",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
-	LeftDelim:        "[[",
-	RightDelim:       "]]",
+	LeftDelim:        "{{",
+	RightDelim:       "}}",
 }
 
 func init() {
