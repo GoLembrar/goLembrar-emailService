@@ -1,0 +1,95 @@
+basePath: /v1
+definitions:
+  email.EmailParams:
+    properties:
+      descHtml:
+        example: <p>Message description</p>
+        maxLength: 500
+        type: string
+      emails:
+        example:
+        - joaozinho@gmail.com
+        items:
+          type: string
+        type: array
+      ownerEmail:
+        example: maria@gmail.com
+        maxLength: 100
+        type: string
+      title:
+        example: The message title
+        maxLength: 120
+        type: string
+    required:
+    - descHtml
+    - emails
+    - ownerEmail
+    - title
+    type: object
+  handler.EmailResponse:
+    properties:
+      id:
+        example: cfb2011b...
+        type: string
+      message:
+        example: Email sent successfully
+        type: string
+    type: object
+  handler.HealthCheckerResponse:
+    properties:
+      status:
+        example: ok
+        type: string
+    type: object
+  swagger.APIError:
+    properties:
+      errorCode:
+        type: integer
+      errorMessage:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Dedicated microservice for send the emails for https://golembrar.com
+  title: goLembrar email microservice
+  version: "0.1"
+paths:
+  /check:
+    get:
+      description: check if API is running
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.HealthCheckerResponse'
+      summary: Health checker
+      tags:
+      - main
+  /send-email:
+    post:
+      description: take request and send the email for you
+      parameters:
+      - description: Email parameters
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/email.EmailParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.EmailResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/swagger.APIError'
+      summary: Send email
+      tags:
+      - email
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

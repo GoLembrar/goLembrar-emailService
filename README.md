@@ -1,4 +1,29 @@
-
 ## 💭 Sobre esse repo.
 
 Esse microserviço de e-mail foi feito para simplificar o desenvolvimento do goLembrar, utilizando o serviço da resend.com para agendar e efetuar o envio dos e-mails. Essa integração permite que o goLembrar automatize o processo de entrega de lembretes e notificações de forma confiável e eficiente. A API pode gerenciar a comunicações de maneira prática, assegurando que cada lembrete chegue ao destinatário no momento certo. Essa solução não só melhora a experiência do usuário, mas também otimiza o desempenho do sistema, permitindo que o goLembrar se concentre na entrega de valor aos seus usuários.
+
+## 🖥️ Como rodar
+
+#### Instale os pacotes
+
+```sh
+$ go install github.com/air-verse/air@latest
+
+$ go install github.com/swaggo/swag/cmd/swag@latest
+
+$ go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+
+$ go install github.com/evilmartians/lefthook@latest
+```
+
+#### Gere os arquivos do swagger
+
+```sh
+$ ~/go/bin/swag init -g main.g
+```
+
+#### Rode com o air
+
+```sh
+$ air .
+```

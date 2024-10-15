@@ -12,7 +12,8 @@ func CorsMiddleware() gin.HandlerFunc {
 	}
 
 	excludeEndPoints := map[string]struct{}{
-		"/check": {},
+		"/check":           {},
+		"/docs/index.html": {},
 	}
 
 	return func(c *gin.Context) {

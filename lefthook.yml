@@ -1,0 +1,14 @@
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+
+pre-commit:
+  piped: true
+  commands:
+    format:
+      run: go fmt ./...
+    lint:
+      run: golangci-lint run
+    gen-docs:
+      run: swag init -g main.go
+    add-git:
+      run: git add .

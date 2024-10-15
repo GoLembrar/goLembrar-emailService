@@ -4,11 +4,18 @@ import (
 	"fmt"
 	"log"
 
+	_ "github.com/GoLembrar/goLembrar-emailService/docs"
+
 	"github.com/GoLembrar/goLembrar-emailService/internal/api"
 	"github.com/GoLembrar/goLembrar-emailService/internal/utils"
 	"github.com/fatih/color"
 )
 
+// @title			goLembrar email microservice
+// @version		0.1
+// @description	Dedicated microservice for send the emails for https://golembrar.com
+// @BasePath		/v1
+// @securityDefinitions.basic  BasicAuth
 func main() {
 	port := utils.GetEnvVar("PORT")
 

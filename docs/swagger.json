@@ -1,0 +1,141 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Dedicated microservice for send the emails for https://golembrar.com",
+        "title": "goLembrar email microservice",
+        "contact": {},
+        "version": "0.1"
+    },
+    "basePath": "/v1",
+    "paths": {
+        "/check": {
+            "get": {
+                "description": "check if API is running",
+                "tags": [
+                    "main"
+                ],
+                "summary": "Health checker",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.HealthCheckerResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/send-email": {
+            "post": {
+                "description": "take request and send the email for you",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "email"
+                ],
+                "summary": "Send email",
+                "parameters": [
+                    {
+                        "description": "Email parameters",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/email.EmailParams"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handler.EmailResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/swagger.APIError"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "email.EmailParams": {
+            "type": "object",
+            "required": [
+                "descHtml",
+                "emails",
+                "ownerEmail",
+                "title"
+            ],
+            "properties": {
+                "descHtml": {
+                    "type": "string",
+                    "maxLength": 500,
+                    "example": "\u003cp\u003eMessage description\u003c/p\u003e"
+                },
+                "emails": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "joaozinho@gmail.com"
+                    ]
+                },
+                "ownerEmail": {
+                    "type": "string",
+                    "maxLength": 100,
+                    "example": "maria@gmail.com"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 120,
+                    "example": "The message title"
+                }
+            }
+        },
+        "handler.EmailResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "example": "cfb2011b..."
+                },
+                "message": {
+                    "type": "string",
+                    "example": "Email sent successfully"
+                }
+            }
+        },
+        "handler.HealthCheckerResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "example": "ok"
+                }
+            }
+        },
+        "swagger.APIError": {
+            "type": "object",
+            "properties": {
+                "errorCode": {
+                    "type": "integer"
+                },
+                "errorMessage": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        }
+    }
+}
