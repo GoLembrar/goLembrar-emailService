@@ -9,12 +9,10 @@ import (
 )
 
 type EmailParams struct {
-	To      []string `json:"to" validate:"required,dive,email,max=100"`
-	Html    string   `json:"html" validate:"required,max=500"`
-	Subject string   `json:"subject" validate:"required,max=120"`
-	Cc      []string `json:"cc" validate:"omitempty,dive,email,max=100"`
-	Bcc     []string `json:"bcc" validate:"omitempty,dive,email,max=100"`
-	ReplyTo string   `json:"replyTo" validate:"omitempty,email,max=100"`
+	To      []string `json:"to" validate:"required,dive,email,max=100" example:"joaozinho@gmail.com"`
+	Subject string   `json:"subject" validate:"required,max=120" example:"The message title"`
+	Html    string   `json:"html" validate:"required,max=500" example:"<p>Message description</p>"`
+	Owner   string   `json:"owner" validate:"required,dive,email,max=100" example:"maria@gmail.com"`
 }
 
 type ScheduleEmailParams struct {
@@ -49,11 +47,9 @@ func (s *EmailService) SendEmail(params *EmailParams) (string, error) {
 	resendParams := &resend.SendEmailRequest{
 		From:    utils.GetEnvVar("SEND_EMAIL"),
 		To:      params.To,
-		Html:    params.Html,
 		Subject: params.Subject,
-		Cc:      params.Cc,
-		Bcc:     params.Bcc,
-		ReplyTo: utils.GetEnvVar("SEND_EMAIL"),
+		Html:    params.Html,
+		ReplyTo: params.Owner,
 	}
 
 	sent, err := s.client.Emails.Send(resendParams)
@@ -75,8 +71,6 @@ func (s *EmailService) ScheduleEmail(params *ScheduleEmailParams) (string, error
 		To:          params.To,
 		Html:        params.Html,
 		Subject:     params.Subject,
-		Cc:          params.Cc,
-		Bcc:         params.Bcc,
 		ReplyTo:     utils.GetEnvVar("SEND_EMAIL"),
 		ScheduledAt: params.ScheduledAt,
 	}

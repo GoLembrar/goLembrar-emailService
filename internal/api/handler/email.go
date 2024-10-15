@@ -16,11 +16,11 @@ func NewEmailHandler(emailService *email.EmailService) *EmailHandler {
 }
 
 // @Summary			Send email
-// @Description		Get the info and send email for now
-// @Tags			email
-// @Accept			json
+// @Description	Take the info and send email for you
+// @Tags				email
+// @Param			Body body email.EmailParams true "Email parameters"
 // @Produce			json
-// @Success			200			{object}	email.EmailParams
+// @Success			200
 // @Failure			400			{object}	swagger.APIError
 // @Router			/send-email	[post]
 func (h *EmailHandler) SendEmail(c *gin.Context) {

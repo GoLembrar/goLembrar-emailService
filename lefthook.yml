@@ -2,7 +2,11 @@
 #   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
 
 pre-commit:
-  parallel: true
+  piped: true
   commands:
     lint:
       run: golangci-lint run
+    gen-docs:
+      run: swag init -g main.go
+    add-git:
+      run: git add .

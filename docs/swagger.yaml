@@ -2,29 +2,26 @@ basePath: /v1
 definitions:
   email.EmailParams:
     properties:
-      bcc:
-        items:
-          type: string
-        type: array
-      cc:
-        items:
-          type: string
-        type: array
       html:
+        example: <p>Message description</p>
         maxLength: 500
         type: string
-      replyTo:
-        maxLength: 100
+      owner:
+        example: maria@gmail.com
         type: string
       subject:
+        example: The message title
         maxLength: 120
         type: string
       to:
+        example:
+        - joaozinho@gmail.com
         items:
           type: string
         type: array
     required:
     - html
+    - owner
     - subject
     - to
     type: object
@@ -44,16 +41,19 @@ info:
 paths:
   /send-email:
     post:
-      consumes:
-      - application/json
-      description: Get the info and send email for now
+      description: Take the info and send email for you
+      parameters:
+      - description: Email parameters
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/email.EmailParams'
       produces:
       - application/json
       responses:
         "200":
           description: OK
-          schema:
-            $ref: '#/definitions/email.EmailParams'
         "400":
           description: Bad Request
           schema:

@@ -11,10 +11,7 @@
     "paths": {
         "/send-email": {
             "post": {
-                "description": "Get the info and send email for now",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Take the info and send email for you",
                 "produces": [
                     "application/json"
                 ],
@@ -22,12 +19,20 @@
                     "email"
                 ],
                 "summary": "Send email",
-                "responses": {
-                    "200": {
-                        "description": "OK",
+                "parameters": [
+                    {
+                        "description": "Email parameters",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
                         "schema": {
                             "$ref": "#/definitions/email.EmailParams"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
                     },
                     "400": {
                         "description": "Bad Request",
@@ -44,39 +49,33 @@
             "type": "object",
             "required": [
                 "html",
+                "owner",
                 "subject",
                 "to"
             ],
             "properties": {
-                "bcc": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "cc": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
                 "html": {
                     "type": "string",
-                    "maxLength": 500
+                    "maxLength": 500,
+                    "example": "\u003cp\u003eMessage description\u003c/p\u003e"
                 },
-                "replyTo": {
+                "owner": {
                     "type": "string",
-                    "maxLength": 100
+                    "example": "maria@gmail.com"
                 },
                 "subject": {
                     "type": "string",
-                    "maxLength": 120
+                    "maxLength": 120,
+                    "example": "The message title"
                 },
                 "to": {
                     "type": "array",
                     "items": {
                         "type": "string"
-                    }
+                    },
+                    "example": [
+                        "joaozinho@gmail.com"
+                    ]
                 }
             }
         },
