@@ -15,7 +15,6 @@ import (
 // @version		0.1
 // @description	Dedicated microservice for send the emails for https://golembrar.com
 // @BasePath		/v1
-// @securityDefinitions.basic  BasicAuth
 func main() {
 	port := utils.GetEnvVar("PORT")
 

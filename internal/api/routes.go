@@ -51,8 +51,19 @@ func SetupRoutes() (*gin.Engine, error) {
 	// rV1.POST("/schedule-email", emailHandler.ScheduleEmail)
 	rV1.POST("/send-email", emailHandler.SendEmail)
 	rV1.GET("/check", handler.HealthChecker)
-
 	r.GET("/", handler.RedirectToDocs)
-	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
+	swagger_user := utils.GetEnvVar("SWAGGER_USER")
+	swagger_password := utils.GetEnvVar("SWAGGER_PASSWORD")
+
+	if goEnv != "development" {
+		authorized_routes := r.Group("/docs", gin.BasicAuth(gin.Accounts{
+			swagger_user: swagger_password,
+		}))
+		authorized_routes.GET("*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	} else {
+		r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	}
+
 	return r, nil
 }

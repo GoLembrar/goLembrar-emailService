@@ -89,7 +89,4 @@ paths:
       summary: Send email
       tags:
       - email
-securityDefinitions:
-  BasicAuth:
-    type: basic
 swagger: "2.0"
